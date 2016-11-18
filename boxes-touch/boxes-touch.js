@@ -81,6 +81,18 @@
             });
     };
 
+    let boxCreation = (event) => {
+
+    }
+
+    let boxResizing = (event) => {
+
+    }
+
+    let boxDeletion = (event) => {
+        
+    }
+
     // No arrow function here because we don't want lexical scoping.
     $.fn.boxesTouch = function () {
         setDrawingArea(this);
