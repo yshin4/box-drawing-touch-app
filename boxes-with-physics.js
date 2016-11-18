@@ -1,5 +1,22 @@
 (($) => {
 
+    let setupDragState = () => $(".drawing-area .box").unbind("touchmove").unbind("touchend");
+
+    let startDraw = function(event){
+      var touch = event.changedTouches[0];
+      this.anchorX = touch.pageX;
+      this.anchorY = touch.pageY;
+      this.drawingBox = $("<div></div>")
+          .appendTo(this)
+          .addClass("box")
+          .data({
+              position: { left: this.anchorX, top: this.anchorY },
+              velocity: { x: 0, y: 0, z: 0 },
+              acceleration: { x: 0, y: 0, z: 0 }
+          });
+      setupDragState();
+    };
+
     /**
      * Tracks a box as it is rubberbanded or moved across the drawing area.
      */
@@ -16,6 +33,17 @@
                 $(touch.target).data('position', newPosition);
                 touch.target.movingBox.offset(newPosition);
             }
+
+            // let newPosition = {
+            //     left: touch.pageX - touch.target.deltaX,
+            //     top: touch.pageY - touch.target.deltaY
+            // };
+            //
+            //     this.drawingBox
+            //         .offset(newPosition)
+            //         .width(Math.abs(event.pageX - this.anchorX))
+            //         .height(Math.abs(event.pageY - this.anchorY));
+
         });
 
         // Don't do any touch scrolling.
@@ -153,11 +181,13 @@
             .each((index, element) => {
                 element.addEventListener("touchmove", trackDrag, false);
                 element.addEventListener("touchend", endDrag, false);
+                element.addEventListener("touchstart", startDraw, false);
             })
 
             .find("div.box").each((index, element) => {
                 element.addEventListener("touchstart", startMove, false);
                 element.addEventListener("touchend", unhighlight, false);
+
 
                 $(element).data({
                     position: $(element).offset(),
