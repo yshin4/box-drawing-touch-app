@@ -3,18 +3,19 @@
     let setupDragState = () => $(".drawing-area .box").unbind("touchmove").unbind("touchend");
 
     let startDraw = function(event){
-      var touch = event.changedTouches[0];
-      this.anchorX = touch.pageX;
-      this.anchorY = touch.pageY;
-      this.drawingBox = $("<div></div>")
-          .appendTo(this)
-          .addClass("box")
-          .data({
-              position: { left: this.anchorX, top: this.anchorY },
-              velocity: { x: 0, y: 0, z: 0 },
-              acceleration: { x: 0, y: 0, z: 0 }
-          });
-      setupDragState();
+      $.each(event.changedTouches, function (index, touch) {
+          touch.target.anchorX = touch.pageX;
+          touch.target.anchorY = touch.pageY;
+          touch.target.drawingBox = $("<div></div>")
+              .appendTo(touch.target)
+              .addClass("box")
+              .data({
+                  position: { left: touch.target.anchorX, top: touch.target.anchorY },
+                  velocity: { x: 0, y: 0, z: 0 },
+                  acceleration: { x: 0, y: 0, z: 0 }
+              });
+          setupDragState();
+      });
     };
 
     /**
