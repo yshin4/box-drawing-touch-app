@@ -17,7 +17,6 @@
               });
           setupDragState();
       });
-      //setupDragState();
     };
 
     /**
@@ -46,7 +45,6 @@
                 $(touch.target).data('position', newPosition);
                 touch.target.movingBox.offset(newPosition);
             }
-
         });
 
         // Don't do any touch scrolling.
@@ -60,7 +58,7 @@
         $.each(event.changedTouches, (index, touch) => {
 
             if (touch.target.drawingBox){
-                $("div.box").each((index, element) => {
+                $($('#"div.box"')).each((index, element) => {
                   element.addEventListener("touchstart", startMove, false);
                   element.addEventListener("touchmove", highlight, false);
                   element.addEventListener("touchend", unhighlight, false);
@@ -79,8 +77,7 @@
               .each((index, element) => {
                 element.addEventListener("touchmove", highlight, false);
                 element.addEventListener("touchend", unhighlight, false);
-              });
-
+            });
         });
     };
 
@@ -142,7 +139,7 @@
             return;
         }
 
-        $("div.box").each((index, element) => {
+        $($('#"div.box"')).each((index, element) => {
             let $element = $(element);
 
             // If it's highlighted, we don't accelerate it because it is under a finger.
@@ -208,7 +205,7 @@
                 element.addEventListener("touchstart", startDraw, false);
             })
 
-            .find("div.box").each((index, element) => {
+            .find($('#"div.box"')).each((index, element) => {
                 element.addEventListener("touchstart", startMove, false);
                 element.addEventListener("touchend", unhighlight, false);
 
@@ -223,7 +220,7 @@
         // In this sample, device acceleration is the _sole_ determiner of a box's acceleration.
         window.ondevicemotion = (event) => {
             let a = event.accelerationIncludingGravity;
-            $("div.box").each((index, element) => {
+            $($('#"div.box"')).each((index, element) => {
                 $(element).data('acceleration', a);
             });
         };
