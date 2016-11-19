@@ -59,7 +59,6 @@
     let endDrag = (event) => {
         $.each(event.changedTouches, (index, touch) => {
 
-
             if (touch.target.drawingBox){
                 $("div.box").each((index, element) => {
                   element.addEventListener("touchstart", startMove, false);
@@ -74,10 +73,14 @@
 
                 touch.target.movingBox = null;
             }
+
             $(".drawing-area .box")
-                .removeClass("box-highlight")
-                //.touchmove(highlight)
-                //.touchend(unhighlight);
+              .removeClass("box-highlight")
+              .each((index, element) => {
+                element.addEventListener("touchmove", highlight, false);
+                element.addEventListener("touchend", unhighlight, false);
+              });
+
         });
     };
 
@@ -100,6 +103,7 @@
             // nothing because, well, _finger_.
             let jThis = $(touch.target);
             let startOffset = jThis.offset();
+
             jThis.data({
                 position: startOffset,
                 velocity: { x: 0, y: 0, z: 0 },
