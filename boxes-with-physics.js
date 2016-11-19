@@ -23,7 +23,18 @@
     let trackDrag = (event) => {
         $.each(event.changedTouches, function (index, touch) {
             // Don't bother if we aren't tracking anything.
-            if (touch.target.movingBox) {
+            if(touch.target.drawingBox){
+              let newOffset = {
+                      left: (touch.target.anchorX < touch.pageX) ? touch.target.anchorX : touch.pageX,
+                      top: (touch.target.anchorY < touch.pageY) ? touch.target.anchorY : touch.pageY
+                  };
+
+              touch.target.drawingBox
+                  .offset(newOffset)
+                  .width(Math.abs(touch.pageX - touch.target.anchorX))
+                  .height(Math.abs(touch.pageY - touch.target.anchorY));
+
+            } else if (touch.target.movingBox) {
                 // Reposition the object.
                 let newPosition = {
                     left: touch.pageX - touch.target.deltaX,
@@ -33,16 +44,6 @@
                 $(touch.target).data('position', newPosition);
                 touch.target.movingBox.offset(newPosition);
             }
-
-            // let newPosition = {
-            //     left: touch.pageX - touch.target.deltaX,
-            //     top: touch.pageY - touch.target.deltaY
-            // };
-            //
-            //     this.drawingBox
-            //         .offset(newPosition)
-            //         .width(Math.abs(event.pageX - this.anchorX))
-            //         .height(Math.abs(event.pageY - this.anchorY));
 
         });
 
