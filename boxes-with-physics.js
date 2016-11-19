@@ -9,6 +9,7 @@
           touch.target.drawingBox = $("<div></div>")
               .appendTo(touch.target)
               .addClass("box")
+              .addClass("box-highlight")
               .data({
                   position: { left: touch.target.anchorX, top: touch.target.anchorY },
                   velocity: { x: 0, y: 0, z: 0 },
@@ -16,6 +17,7 @@
               });
           setupDragState();
       });
+      //setupDragState();
     };
 
     /**
@@ -26,11 +28,10 @@
             // Don't bother if we aren't tracking anything.
             if(touch.target.drawingBox){
               let newOffset = {
-                      left: (touch.target.anchorX < touch.pageX) ? touch.target.anchorX : touch.pageX,
-                      top: (touch.target.anchorY < touch.pageY) ? touch.target.anchorY : touch.pageY
-                  };
-
-              touch.target.drawingBox
+                  left: (touch.target.anchorX < touch.pageX) ? touch.target.anchorX : touch.pageX,
+                  top: (touch.target.anchorY < touch.pageY) ? touch.target.anchorY : touch.pageY
+            };
+            touch.target.drawingBox
                   .offset(newOffset)
                   .width(Math.abs(touch.pageX - touch.target.anchorX))
                   .height(Math.abs(touch.pageY - touch.target.anchorY));
@@ -57,11 +58,26 @@
      */
     let endDrag = (event) => {
         $.each(event.changedTouches, (index, touch) => {
-            if (touch.target.movingBox) {
+
+
+            if (touch.target.drawingBox){
+                $("div.box").each((index, element) => {
+                  element.addEventListener("touchstart", startMove, false);
+                  element.addEventListener("touchmove", highlight, false);
+                  element.addEventListener("touchend", unhighlight, false);
+                });
+
+                touch.target.drawingBox = null;
+            } else if (touch.target.movingBox) {
                 // Change state to "not-moving-anything" by clearing out
                 // touch.target.movingBox.
+
                 touch.target.movingBox = null;
             }
+            $(".drawing-area .box")
+                .removeClass("box-highlight")
+                //.touchmove(highlight)
+                //.touchend(unhighlight);
         });
     };
 
@@ -69,6 +85,8 @@
      * Indicates that an element is unhighlighted.
      */
     let unhighlight = (event) => $(event.currentTarget).removeClass("box-highlight");
+
+    let highlight = (event) => $(event.currentTarget).addClass("box-highlight");
 
     /**
      * Begins a box move sequence.
