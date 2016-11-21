@@ -250,9 +250,9 @@
             .find($("div.box")).each((index, element) => {
                 element.addEventListener("touchstart", startMove, false);
                 element.addEventListener("touchend", unhighlight, false);
-                element.addEventListener("gesturestart", startScale, false);
-                element.addEventListener("gesturechange", changeScale, false);
-                element.addEventListener("gestureend", endScale, false);
+                //element.addEventListener("gesturestart", startScale, false);
+                //element.addEventListener("gesturechange", changeScale, false);
+                //element.addEventListener("gestureend", endScale, false);
 
                 $(element).data({
                     position: $(element).offset(),
