@@ -1,5 +1,8 @@
 (($) => {
 
+
+    let setupDragState = () => $(".drawing-area .box").unbind("touchmove").unbind("touchend");
+
     let startDraw = function(event){
         $.each(event.changedTouches, function (index, touch) {
             touch.target.anchorX = touch.pageX;
@@ -16,17 +19,17 @@
             setupDragState();
         });
     };
- 
+
         // node.addEventListener("gesturechange", function(event){
         //     var style = event.target.style;
         //     // scale and rotation are relative values,
         //     // so we wait to change our variables until the gesture ends
         //     style.width = (width * event.scale) + "px";
         //     style.height = (height * event.scale) + "px";
-        //     style.webkitTransform = "rotate(" + ((rotation 
+        //     style.webkitTransform = "rotate(" + ((rotation
         //       + event.rotation) % 360) + "deg)";
         // }, false);
-         
+
         // node.addEventListener("gestureend", function(event){
         //     // Update the values for the next time a gesture happens
         //     width *= event.scale;
@@ -45,7 +48,8 @@
                 let newOffset = {
                     left: (touch.target.anchorX < touch.pageX) ? touch.target.anchorX : touch.pageX,
                     top: (touch.target.anchorY < touch.pageY) ? touch.target.anchorY : touch.pageY
-            };
+                };
+
             touch.target.drawingBox
                     .offset(newOffset)
                     .width(Math.abs(touch.pageX - touch.target.anchorX))
@@ -118,6 +122,7 @@
 
             // Take note of the box's current (global) location. Also, set its velocity and acceleration to
             // nothing because, well, _finger_.
+
             let jThis = $(touch.target);
             let startOffset = jThis.offset();
 
