@@ -50,9 +50,11 @@
                 };
 
             touch.target.drawingBox
-                    .offset(newOffset)
-                    .width(Math.abs(touch.pageX - touch.target.anchorX))
-                    .height(Math.abs(touch.pageY - touch.target.anchorY));
+                .data({position: newOffset})
+                .offset(newOffset)
+                .width(Math.abs(touch.pageX - touch.target.anchorX))
+                .height(Math.abs(touch.pageY - touch.target.anchorY));
+
 
             } else if (touch.target.movingBox) {
                 // Reposition the object.
@@ -145,9 +147,13 @@
     let changeScale = (event) => {
         $.each(event.changedTouches, (index, touch) => {
             scale = touch.scale;
+            //let newOffset = {
+            //        left: (touch.target.anchorX < touch.pageX) ? touch.target.anchorX : touch.pageX,
+            //        top: (touch.target.anchorY < touch.pageY) ? touch.target.anchorY : touch.pageY
+            //};
             touch.target.movingBox
-                .offset(newOffset)
-                .width(Math.abs(sacle * (touch.pageX - touch.target.anchorX)))
+                //.offset(newOffset)
+                .width(Math.abs(scale * (touch.pageX - touch.target.anchorX)))
                 .height(Math.abs(scale * (touch.pageY - touch.target.anchorY)));
         });
     };
@@ -244,6 +250,7 @@
             .find($("div.box")).each((index, element) => {
                 element.addEventListener("touchstart", startMove, false);
                 element.addEventListener("touchend", unhighlight, false);
+                element.addEventListener("gesturestart", startScale, false);
                 element.addEventListener("gesturechange", changeScale, false);
                 element.addEventListener("gestureend", endScale, false);
 
