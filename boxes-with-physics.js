@@ -144,6 +144,21 @@
         event.stopPropagation();
     };
 
+    let changeScale = (event) => {
+
+      $.each(event.changedTouches, (index, touch) => {
+          scale = touch.scale;
+          touch.target.movingBox
+                  .offset(newOffset)
+                  .width(Math.abs(sacle * (touch.pageX - touch.target.anchorX)))
+                  .height(Math.abs(scale * (touch.pageY - touch.target.anchorY)));
+      });
+    };
+
+    let endScale = (event) => {
+        event.preventDefault();
+    };
+
     /**
      * The motion update routine.
      */
@@ -214,6 +229,7 @@
         window.requestAnimationFrame(updateBoxes);
     };
 
+
     /**
      * Sets up the given jQuery collection as the drawing area(s).
      */
@@ -233,6 +249,8 @@
             .find($("div.box")).each((index, element) => {
                 element.addEventListener("touchstart", startMove, false);
                 element.addEventListener("touchend", unhighlight, false);
+                element.addEventListener("gesturechange", changeScale, false);
+                element.addEventListener("gestureend", endScale, false);
 
 
                 $(element).data({
