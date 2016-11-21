@@ -1,6 +1,5 @@
 (($) => {
 
-
     let setupDragState = () => $(".drawing-area .box").unbind("touchmove").unbind("touchend");
 
     let startDraw = function(event){
@@ -97,10 +96,10 @@
             }
 
             $(".drawing-area .box")
-              .removeClass("box-highlight")
-              .each((index, element) => {
-                element.addEventListener("touchmove", highlight, false);
-                element.addEventListener("touchend", unhighlight, false);
+                .removeClass("box-highlight")
+                .each((index, element) => {
+                    element.addEventListener("touchmove", highlight, false);
+                    element.addEventListener("touchend", unhighlight, false);
             });
         });
     };
@@ -109,7 +108,6 @@
      * Indicates that an element is unhighlighted.
      */
     let unhighlight = (event) => $(event.currentTarget).removeClass("box-highlight");
-
     let highlight = (event) => $(event.currentTarget).addClass("box-highlight");
 
     /**
@@ -145,14 +143,13 @@
     };
 
     let changeScale = (event) => {
-
-      $.each(event.changedTouches, (index, touch) => {
-          scale = touch.scale;
-          touch.target.movingBox
-                  .offset(newOffset)
-                  .width(Math.abs(sacle * (touch.pageX - touch.target.anchorX)))
-                  .height(Math.abs(scale * (touch.pageY - touch.target.anchorY)));
-      });
+        $.each(event.changedTouches, (index, touch) => {
+            scale = touch.scale;
+            touch.target.movingBox
+                .offset(newOffset)
+                .width(Math.abs(sacle * (touch.pageX - touch.target.anchorX)))
+                .height(Math.abs(scale * (touch.pageY - touch.target.anchorY)));
+        });
     };
 
     let endScale = (event) => {
@@ -228,8 +225,6 @@
         lastTimestamp = timestamp;
         window.requestAnimationFrame(updateBoxes);
     };
-
-
     /**
      * Sets up the given jQuery collection as the drawing area(s).
      */
@@ -252,14 +247,12 @@
                 element.addEventListener("gesturechange", changeScale, false);
                 element.addEventListener("gestureend", endScale, false);
 
-
                 $(element).data({
                     position: $(element).offset(),
                     velocity: { x: 0, y: 0, z: 0 },
                     acceleration: { x: 0, y: 0, z: 0 }
                 });
             });
-
         // In this sample, device acceleration is the _sole_ determiner of a box's acceleration.
         window.ondevicemotion = (event) => {
             let a = event.accelerationIncludingGravity;
@@ -267,11 +260,9 @@
                 $(element).data('acceleration', a);
             });
         };
-
         // Start the animation sequence.
         window.requestAnimationFrame(updateBoxes);
     };
-
     // No arrow function here because we don't want lexical scoping.
     $.fn.boxesWithPhysics = function () {
         setDrawingArea(this);
