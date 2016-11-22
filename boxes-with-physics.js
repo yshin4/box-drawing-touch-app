@@ -17,7 +17,7 @@
                 });
             setupDragState();
         });
-      }
+    }
 
     /**
      * Tracks a box as it is rubberbanded or moved across the drawing area.
