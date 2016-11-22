@@ -136,13 +136,43 @@
         // let currentWidth = $(event.currentTarget).width();
         // let currentHeight = $(event.currentTarget).height();
 
-
         $(event.currentTarget)
             .width($(event.currentTarget).data.("currentWidth") * event.scale)
             .height($(event.currentTarget).data.("currentHeight") * event.scale);
     };
 
+//      let gestureStart = (event) => {
+//         //$("p.log").text("GESTURE START");
+//         $(".drawing-area").unbind("touchstart").unbind("touchmove").unbind("touchend");
+//         let box = $(event.currentTarget);
+//         $("div.box").unbind("touchstart").unbind("touchmove").unbind("touchend");
+//         box.data({
+//             startWidth: box.width(),
+//             startHeight: box.height()
+//         });
+//     };
 
+//     let gestureChange = (event) => {
+//         event.preventDefault();
+//         let scale = event.scale;
+
+//         let box = $(event.currentTarget);
+//         box.width(box.data("startWidth") * scale);
+//         box.height(box.data("startHeight") * scale);
+//         box.offset(box.data("position"));
+//         $("p.log").text("GESTURE CHANGE " + event.scale);
+//     };
+
+//     let gestureEnd = (event) => {
+//         $("p.log").text("GESTURE END");
+//         $(".drawing-area")
+//             .bind("touchstart", startDraw)
+//             .bind("touchmove", trackDrag)
+//             .bind("touchend", endDrag);
+//         $("div.box")
+//             .bind("touchstart", startMove)
+//             .bind("touchend", unhighlight);
+//     }
 
     /**
      * The motion update routine.
