@@ -128,11 +128,11 @@
 
     let changeScale = (event) => {
 
-            let currentWidth = $("div.box").width();
-            let currentHeight = $("div.box").height();
-        
+        let currentWidth = $(event.currentTarget).width();
+        let currentHeight = $(event.currentTarget).height();
 
-        $("div.box")
+
+        $(event.currentTarget)
             .width(currentWidth * event.scale)
             .height(currentHeight * event.scale);
     };
@@ -148,14 +148,6 @@
     //         .height(currentHeight * touch.scale);
     // };
 
-    // let endScale = (event) => {
-    //   $(".drawing-area .box").width *= event.scale;
-    //   $(".drawing-area .box").height *= event.scale;
-    //   // $.each(event.changedTouches, (index, touch) => {
-    //   //   touch.target.box.width *= touch.scale;
-    //   //   touch.target.box.height *= touch.scale;
-    //   // });
-    // };
 
     /**
      * The motion update routine.
@@ -245,9 +237,7 @@
             .find($("div.box")).each((index, element) => {
                 element.addEventListener("touchstart", startMove, false);
                 element.addEventListener("touchend", unhighlight, false);
-                //element.addEventListener("gesturestart", startScale, false);
                 element.addEventListener("gesturechange", changeScale, false);
-                //element.addEventListener("gestureend", endScale, false);
 
                 $(element).data({
                     position: $(element).offset(),
