@@ -143,7 +143,10 @@
 
        $(".drawing-area").each((index, element) => {
            element.removeEventListener("touchmove", trackDrag);
+           element.removeEventListener("touchstart", startDraw);
+
        });
+
     };
 
     let changeResize = (event) => {
