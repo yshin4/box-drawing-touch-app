@@ -17,25 +17,7 @@
                 });
             setupDragState();
         });
-    };
-
-        // node.addEventListener("gesturechange", function(event){
-        //     var style = event.target.style;
-        //     // scale and rotation are relative values,
-        //     // so we wait to change our variables until the gesture ends
-        //     style.width = (width * event.scale) + "px";
-        //     style.height = (height * event.scale) + "px";
-        //     style.webkitTransform = "rotate(" + ((rotation
-        //       + event.rotation) % 360) + "deg)";
-        // }, false);
-
-        // node.addEventListener("gestureend", function(event){
-        //     // Update the values for the next time a gesture happens
-        //     width *= event.scale;
-        //     height *= event.scale;
-        //     rotation = (rotation + event.rotation) % 360;
-        // }, false);
-        // };
+      }
 
     /**
      * Tracks a box as it is rubberbanded or moved across the drawing area.
@@ -145,22 +127,35 @@
     };
 
     let changeScale = (event) => {
-        $.each(event.changedTouches, (index, touch) => {
-            scale = touch.scale;
-            //let newOffset = {
-            //        left: (touch.target.anchorX < touch.pageX) ? touch.target.anchorX : touch.pageX,
-            //        top: (touch.target.anchorY < touch.pageY) ? touch.target.anchorY : touch.pageY
-            //};
-            touch.target.movingBox
-                //.offset(newOffset)
-                .width(Math.abs(scale * (touch.pageX - touch.target.anchorX)))
-                .height(Math.abs(scale * (touch.pageY - touch.target.anchorY)));
-        });
+
+            let currentWidth = $("div.box").width();
+            let currentHeight = $("div.box").height();
+        
+
+        $("div.box")
+            .width(currentWidth * event.scale)
+            .height(currentHeight * event.scale);
     };
 
-    let endScale = (event) => {
-        event.preventDefault();
-    };
+    // let changeScale = (event) => {
+    //     $.each(event.changedTouches, (index, touch) => {
+    //         let currentWidth = $(touch.target).width();
+    //         let currentHeight = $(touch.target).height();
+    //     });
+    //
+    //     $(touch.target)
+    //         .width(currentWidth * touch.scale)
+    //         .height(currentHeight * touch.scale);
+    // };
+
+    // let endScale = (event) => {
+    //   $(".drawing-area .box").width *= event.scale;
+    //   $(".drawing-area .box").height *= event.scale;
+    //   // $.each(event.changedTouches, (index, touch) => {
+    //   //   touch.target.box.width *= touch.scale;
+    //   //   touch.target.box.height *= touch.scale;
+    //   // });
+    // };
 
     /**
      * The motion update routine.
@@ -251,7 +246,7 @@
                 element.addEventListener("touchstart", startMove, false);
                 element.addEventListener("touchend", unhighlight, false);
                 //element.addEventListener("gesturestart", startScale, false);
-                //element.addEventListener("gesturechange", changeScale, false);
+                element.addEventListener("gesturechange", changeScale, false);
                 //element.addEventListener("gestureend", endScale, false);
 
                 $(element).data({
