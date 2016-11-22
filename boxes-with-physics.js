@@ -143,28 +143,6 @@
     };
 
 
-//     let gestureChange = (event) => {
-//         event.preventDefault();
-//         let scale = event.scale;
-
-//         let box = $(event.currentTarget);
-//         box.width(box.data("startWidth") * scale);
-//         box.height(box.data("startHeight") * scale);
-//         box.offset(box.data("position"));
-//         $("p.log").text("GESTURE CHANGE " + event.scale);
-//     };
-
-//     let gestureEnd = (event) => {
-//         $("p.log").text("GESTURE END");
-//         $(".drawing-area")
-//             .bind("touchstart", startDraw)
-//             .bind("touchmove", trackDrag)
-//             .bind("touchend", endDrag);
-//         $("div.box")
-//             .bind("touchstart", startMove)
-//             .bind("touchend", unhighlight);
-//     }
-
     /**
      * The motion update routine.
      */
