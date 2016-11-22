@@ -142,7 +142,6 @@
         currentBox.height(currentBox.data("currentHeight") * event.scale);
     };
 
-
     /**
      * The motion update routine.
      */
