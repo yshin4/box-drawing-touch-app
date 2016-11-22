@@ -69,6 +69,7 @@
                   element.addEventListener("touchstart", startMove, false);
                   element.addEventListener("touchmove", highlight, false);
                   element.addEventListener("touchend", unhighlight, false);
+                  element.addEventListener("gesturechange", changeScale, false);
                 });
 
                 touch.target.drawingBox = null;
@@ -139,13 +140,13 @@
 
     // let changeScale = (event) => {
     //     $.each(event.changedTouches, (index, touch) => {
-    //         let currentWidth = $(touch.target).width();
-    //         let currentHeight = $(touch.target).height();
-    //     });
+    //         let currentWidth = $(touch.currentTarget).width();
+    //         let currentHeight = $(touch.currentTarget).height();
     //
-    //     $(touch.target)
-    //         .width(currentWidth * touch.scale)
-    //         .height(currentHeight * touch.scale);
+    //         $(touch.currentTarget)
+    //             .width(currentWidth * touch.scale)
+    //             .height(currentHeight * touch.scale);
+    //     });
     // };
 
 
