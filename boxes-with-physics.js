@@ -19,15 +19,11 @@
         });
     }
 
-    let gestureIsHappening = false;
 
     /**
      * Tracks a box as it is rubberbanded or moved across the drawing area.
      */
     let trackDrag = (event) => {
-        if (gestureIsHappening) {
-            return;
-        }
 
         $.each(event.changedTouches, function (index, touch) {
             // Don't bother if we aren't tracking anything.
@@ -138,7 +134,6 @@
     };
 
     let startResize = (event) =>{
-        gestureIsHappening = true;
         event.preventDefault();
         let currentBox = $(event.currentTarget);
         currentBox.data({
@@ -146,10 +141,9 @@
             currentHeight: currentBox.height()
         });
 
-        // While a gesture is happening, we don't want to move any boxes.
-//        $(".drawing-area").each((index, element) => {
-//            element.removeEventListener("touchmove", trackDrag);
-//        });
+       $(".drawing-area").each((index, element) => {
+           element.removeEventListener("touchmove", trackDrag);
+       });
     };
 
     let changeResize = (event) => {
@@ -161,10 +155,9 @@
 
     let endResize = (event) => {
         event.preventDefault();
-//        $(".drawing-area").each((index, element) => {
-//            element.addEventListener("touchmove", trackDrag, false);
-//        });
-        gestureIsHappening = false;
+       $(".drawing-area").each((index, element) => {
+           element.addEventListener("touchmove", trackDrag, false);
+       });
     };
 
     /**
