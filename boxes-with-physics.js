@@ -127,27 +127,21 @@
         event.stopPropagation();
     };
 
-    let changeScale = (event) => {
+    let startResize = (event) =>{
+        $(event.currentTarget).data ( {currentWidth: $(event.currentTarget).width(), currentHeight: $(event.currentTarget).height()});
+    };
 
-        let currentWidth = $(event.currentTarget).width();
-        let currentHeight = $(event.currentTarget).height();
+    let changeResize = (event) => {
+
+        // let currentWidth = $(event.currentTarget).width();
+        // let currentHeight = $(event.currentTarget).height();
 
 
         $(event.currentTarget)
-            .width(currentWidth * event.scale)
-            .height(currentHeight * event.scale);
+            .width($(event.currentTarget).data.("currentWidth") * event.scale)
+            .height($(event.currentTarget).data.("currentHeight") * event.scale);
     };
 
-    // let changeScale = (event) => {
-    //     $.each(event.changedTouches, (index, touch) => {
-    //         let currentWidth = $(touch.currentTarget).width();
-    //         let currentHeight = $(touch.currentTarget).height();
-    //
-    //         $(touch.currentTarget)
-    //             .width(currentWidth * touch.scale)
-    //             .height(currentHeight * touch.scale);
-    //     });
-    // };
 
 
     /**
@@ -238,7 +232,8 @@
             .find($("div.box")).each((index, element) => {
                 element.addEventListener("touchstart", startMove, false);
                 element.addEventListener("touchend", unhighlight, false);
-                element.addEventListener("gesturechange", changeScale, false);
+                element.addEventListener"gesturestart", startResize, false);
+                element.addEventListener("gesturechange", changeResize, false);
 
                 $(element).data({
                     position: $(element).offset(),
