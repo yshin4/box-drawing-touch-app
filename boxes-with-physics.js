@@ -45,7 +45,7 @@
 
 
             } else if (touch.target.movingBox) {
-                $("p.log").text("MOVING! " + Date.now() + " " + event.target);
+                // $("p.log").text("MOVING! " + Date.now() + " " + event.target);
                 // Reposition the object.
                 let newPosition = {
                     left: touch.pageX - touch.target.deltaX,
