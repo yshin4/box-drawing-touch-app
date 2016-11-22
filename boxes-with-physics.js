@@ -69,7 +69,8 @@
                   element.addEventListener("touchstart", startMove, false);
                   element.addEventListener("touchmove", highlight, false);
                   element.addEventListener("touchend", unhighlight, false);
-                  element.addEventListener("gesturechange", changeScale, false);
+                  element.addEventListener("gesturestart", startResize, false);
+                  element.addEventListener("gesturechange", changeResize, false);
                 });
 
                 touch.target.drawingBox = null;
@@ -128,29 +129,19 @@
     };
 
     let startResize = (event) =>{
-        $(event.currentTarget).data ( {currentWidth: $(event.currentTarget).width(), currentHeight: $(event.currentTarget).height()});
+        let currentBox = $(event.currentTarget);
+        currentBox.data({
+            currentWidth: currentBox.width(),
+            currentHeight: currentBox.height()
+        });
     };
 
     let changeResize = (event) => {
-
-        // let currentWidth = $(event.currentTarget).width();
-        // let currentHeight = $(event.currentTarget).height();
-
-        $(event.currentTarget)
-            .width($(event.currentTarget).data.("currentWidth") * event.scale)
-            .height($(event.currentTarget).data.("currentHeight") * event.scale);
+        let currentBox = $(event.currentTarget);
+        currentBox.width(currentBox.data("currentWidth") * event.scale);
+        currentBox.height(currentBox.data("currentHeight") * event.scale);
     };
 
-//      let gestureStart = (event) => {
-//         //$("p.log").text("GESTURE START");
-//         $(".drawing-area").unbind("touchstart").unbind("touchmove").unbind("touchend");
-//         let box = $(event.currentTarget);
-//         $("div.box").unbind("touchstart").unbind("touchmove").unbind("touchend");
-//         box.data({
-//             startWidth: box.width(),
-//             startHeight: box.height()
-//         });
-//     };
 
 //     let gestureChange = (event) => {
 //         event.preventDefault();
@@ -262,7 +253,7 @@
             .find($("div.box")).each((index, element) => {
                 element.addEventListener("touchstart", startMove, false);
                 element.addEventListener("touchend", unhighlight, false);
-                element.addEventListener"gesturestart", startResize, false);
+                element.addEventListener("gesturestart", startResize, false);
                 element.addEventListener("gesturechange", changeResize, false);
 
                 $(element).data({
