@@ -19,10 +19,16 @@
         });
     }
 
+    let gestureIsHappening = false;
+
     /**
      * Tracks a box as it is rubberbanded or moved across the drawing area.
      */
     let trackDrag = (event) => {
+        if (gestureIsHappening) {
+            return;
+        }
+
         $.each(event.changedTouches, function (index, touch) {
             // Don't bother if we aren't tracking anything.
             if(touch.target.drawingBox){
@@ -39,6 +45,7 @@
 
 
             } else if (touch.target.movingBox) {
+                $("p.log").text("MOVING! " + Date.now() + " " + event.target);
                 // Reposition the object.
                 let newPosition = {
                     left: touch.pageX - touch.target.deltaX,
@@ -62,6 +69,7 @@
      * Concludes a drawing or moving sequence.
      */
     let endDrag = (event) => {
+        $("p.log").text("");
         $.each(event.changedTouches, (index, touch) => {
 
             if (touch.target.drawingBox){
@@ -71,6 +79,7 @@
                   element.addEventListener("touchend", unhighlight, false);
                   element.addEventListener("gesturestart", startResize, false);
                   element.addEventListener("gesturechange", changeResize, false);
+                  element.addEventListener("gestureend", endResize, false);
                 });
 
                 touch.target.drawingBox = null;
@@ -129,17 +138,33 @@
     };
 
     let startResize = (event) =>{
+        gestureIsHappening = true;
+        event.preventDefault();
         let currentBox = $(event.currentTarget);
         currentBox.data({
             currentWidth: currentBox.width(),
             currentHeight: currentBox.height()
         });
+
+        // While a gesture is happening, we don't want to move any boxes.
+//        $(".drawing-area").each((index, element) => {
+//            element.removeEventListener("touchmove", trackDrag);
+//        });
     };
 
     let changeResize = (event) => {
+        event.preventDefault();
         let currentBox = $(event.currentTarget);
         currentBox.width(currentBox.data("currentWidth") * event.scale);
         currentBox.height(currentBox.data("currentHeight") * event.scale);
+    };
+
+    let endResize = (event) => {
+        event.preventDefault();
+//        $(".drawing-area").each((index, element) => {
+//            element.addEventListener("touchmove", trackDrag, false);
+//        });
+        gestureIsHappening = false;
     };
 
     /**
@@ -232,6 +257,7 @@
                 element.addEventListener("touchend", unhighlight, false);
                 element.addEventListener("gesturestart", startResize, false);
                 element.addEventListener("gesturechange", changeResize, false);
+                element.addEventListener("gestureend", endResize, false);
 
                 $(element).data({
                     position: $(element).offset(),
